@@ -10,7 +10,7 @@ app = FastAPI()
 @app.get('/peliculas_idioma')
 def peliculas_idioma(Idioma):
     ## Abro el archivo y creo una lista con los valores de los idiomas
-    DF = pd.read_csv("movies_dataset_modificado_final_1.csv")
+    DF = pd.read_csv("movies_dataset_modificado.csv")
     list_lang = list(DF.spoken_languages.values)
     
     cantidad = sum(1 for item in list_lang if re.search(Idioma, str(item)))
@@ -18,7 +18,7 @@ def peliculas_idioma(Idioma):
 
 @app.get('/peliculas_duracion')
 def peliculas_duracion(Pelicula):
-    DF = pd.read_csv("movies_dataset_modificado_final_1.csv")
+    DF = pd.read_csv("movies_dataset_modificado.csv")
     DF_title = DF.set_index("title")
     
     duracion = DF_title.loc[Pelicula , "runtime"]
@@ -29,7 +29,7 @@ def peliculas_duracion(Pelicula):
 
 def franquicia(Franquicia):
     ## Abro el archivo y aplico groupby para tener los df de donde tomare la info que me solicitan
-    DF = pd.read_csv("movies_dataset_modificado_final_1.csv")
+    DF = pd.read_csv("movies_dataset_modificado.csv")
     DF_SUM = DF.groupby(["belongs_to_collection"]).sum()
     DF_PROM = DF.groupby(["belongs_to_collection"]).mean()
     DF_COUNT = DF.groupby(["belongs_to_collection"]).count()
@@ -55,7 +55,7 @@ def franquicia(Franquicia):
 
 def peliculas_pais(Pais):
     ## Abro el archivo y genero una lista con los valores de los paises
-    DF = pd.read_csv("movies_dataset_modificado_final_1.csv")
+    DF = pd.read_csv("movies_dataset_modificado.csv")
     list_countries = list(DF.production_countries.values)
     
     ## Cuento cada vez que se nombra un país ya que la list_countries es una lista de listas, de esta forma puedo contar al país aún cuando aparece en una lista con otro país
@@ -66,7 +66,7 @@ def peliculas_pais(Pais):
 @app.get('/productoras_exitosas')
 
 def productoras_exitosas(Productora):
-    DF = pd.read_csv("movies_dataset_modificado_final_1.csv")
+    DF = pd.read_csv("movies_dataset_modificado.csv")
     list_companies = list(DF.production_companies.values)
     
     # Convertir la columna 'production_companies' en una lista de listas de strings
