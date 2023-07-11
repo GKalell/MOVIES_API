@@ -21,8 +21,8 @@ def peliculas_duracion(Pelicula):
     DF = pd.read_csv("movies_dataset_modificado.csv")
     DF_title = DF.set_index("title")
     
-    duracion = DF_title.loc[Pelicula , "runtime"]
-    year = DF_title.loc[Pelicula , "release_year"]
+    duracion = DF_title.loc[Pelicula , "runtime"].item()
+    year = DF_title.loc[Pelicula , "release_year"].item()
     return {'La pelicula': Pelicula, 'tiene una duración de': duracion , 'Año': year}
 
 @app.get('/franquicia')
