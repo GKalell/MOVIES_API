@@ -35,21 +35,22 @@ def franquicia(Franquicia):
     DF_COUNT = DF.groupby(["belongs_to_collection"]).count()
     lista_collection = list(DF.belongs_to_collection)
     
-    ## Verifico que el valor sea valido
-    
-    if Franquicia not in lista_collection:
-        return {'Franquicia':"Valor incorrecto", 'cantidad':"Error", 'ganancia_total':"Error", 'ganancia_promedio':"Error"}
-    
+    ## Verifico que el valor sea valido     
     ## Ubico los valores de la franquicia a traves de la funcion loc
 
+    if Franquicia not in lista_collection:
+        return {'Franquicia': "Valor incorrecto", 'cantidad': "Error", 'ganancia_total': "Error", 'ganancia_promedio': "Error"}
+
+    if Franquicia not in DF_COUNT.index:
+        return {'Franquicia': "Valor incorrecto", 'cantidad': "Error", 'ganancia_total': "Error", 'ganancia_promedio': "Error"}
+
     resp_cant = DF_COUNT.loc[Franquicia, 'revenue']
-
     resp_gan_tot = DF_SUM.loc[Franquicia, 'revenue']
-
     resp_gan_prom = DF_PROM.loc[Franquicia, 'revenue']
 
+    return {'La franquicia': Franquicia, 'posee la siguiente cantidad de peliculas': resp_cant, 'con ganancia total': resp_gan_tot, 'y una ganancia promedio': resp_gan_prom}
 
-    return {'La franquicia':Franquicia, 'posee la siguiente cantidad de peliculas':resp_cant, 'con ganancia total':resp_gan_tot, 'y una ganancia promedio':resp_gan_prom}
+    
 
 @app.get('/peliculas_pais')
 
