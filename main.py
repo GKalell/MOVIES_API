@@ -44,9 +44,9 @@ def franquicia(Franquicia):
     if Franquicia not in DF_COUNT.index:
         return {'Franquicia': "Valor incorrecto", 'cantidad': "Error", 'ganancia_total': "Error", 'ganancia_promedio': "Error"}
 
-    resp_cant = DF_COUNT.loc[Franquicia, 'revenue']
-    resp_gan_tot = DF_SUM.loc[Franquicia, 'revenue']
-    resp_gan_prom = DF_PROM.loc[Franquicia, 'revenue']
+    resp_cant = DF_COUNT.loc[Franquicia, 'revenue'].item()
+    resp_gan_tot = DF_SUM.loc[Franquicia, 'revenue'].item()
+    resp_gan_prom = DF_PROM.loc[Franquicia, 'revenue'].item()
 
     return {'La franquicia': Franquicia, 'posee la siguiente cantidad de peliculas': resp_cant, 'con ganancia total': resp_gan_tot, 'y una ganancia promedio': resp_gan_prom}
 
