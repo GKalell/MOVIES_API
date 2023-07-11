@@ -95,4 +95,53 @@ def get_director(nombre_director):
 
     return {'Director': nombre_director, 'Retorno total': sum_return, 'Pelicula, fecha de lanzamiento, costo, retorno individual, ganancia': movies_data}
 
+@app.get('/recomendacion')
+
+def recomendacion(titulo):
+    DF = pd.read_csv("movies_dataset_modificado.csv")
+    Recomendaciones = []
+    other_movies = DF[DF['title'] == titulo]
+
+    belongs_to_collection_value = other_movies['belongs_to_collection'].values[0]
+    max_vote_average_movie = DF[(DF['belongs_to_collection'] == belongs_to_collection_value)].sort_values('vote_average', ascending=False).iloc[0]
+
+    if max_vote_average_movie['title'] == titulo:
+        next_movie = DF[(DF['belongs_to_collection'] == belongs_to_collection_value) & (DF['title'] != titulo)].sort_values('vote_average', ascending=False).iloc[0]
+        Recomendaciones.append(next_movie['title'])
+    else:
+        Recomendaciones.append(max_vote_average_movie['title'])
+
+    genres_value = other_movies['genres'].values[0]
+    max_vote_average_genre_movie = DF[(DF['genres'] == genres_value)].sort_values('vote_average', ascending=False).iloc[0]
+
+    if max_vote_average_genre_movie['title'] != titulo:
+        Recomendaciones.append(max_vote_average_genre_movie['title'])
+
+    crew_value = other_movies['crew'].values[0]
+    max_vote_average_crew_movie = DF[(DF['crew'] == crew_value)].sort_values('vote_average', ascending=False).iloc[0]
+
+    if max_vote_average_crew_movie['title'] != titulo:
+        Recomendaciones.append(max_vote_average_crew_movie['title'])
+
+    production_companies_value = other_movies['production_companies'].values[0]
+    max_vote_average_production_companies_movie = DF[(DF['production_companies'] == production_companies_value)].sort_values('vote_average', ascending=False).iloc[0]
+
+    if max_vote_average_production_companies_movie['title'] != titulo:
+        Recomendaciones.append(max_vote_average_production_companies_movie['title'])
+
+    production_countries_value = other_movies['production_countries'].values[0]
+    max_vote_average_production_countries_movie = DF[(DF['production_countries'] == production_countries_value)].sort_values('vote_average', ascending=False).iloc[0]
+
+    if max_vote_average_production_countries_movie['title'] != titulo:
+        Recomendaciones.append(max_vote_average_production_countries_movie['title'])
+
+    num_recommendations = len(Recomendaciones)
+    while num_recommendations < 5:
+        random_movie = DF.sample(n=1)
+        random_title = random_movie['title'].values[0]
+        if random_title not in Recomendaciones:
+            Recomendaciones.append(random_title)
+            num_recommendations += 1
+
+    return {'Pelicula': titulo, 'Sugerencias': Recomendaciones}
 
