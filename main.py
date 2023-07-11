@@ -8,7 +8,7 @@ from fastapi import FastAPI
 app = FastAPI()
 
 @app.get('/peliculas_idioma')
-def peliculas_idioma( Idioma: str ):
+def peliculas_idioma( Idioma ):
     ## Abro el archivo y creo una lista con los valores de los idiomas
     DF = pd.read_csv("movies_dataset_modificado_final_1.csv")
     list_lang = list(DF.spoken_languages.values)
@@ -17,7 +17,7 @@ def peliculas_idioma( Idioma: str ):
     return {'Se produjeron la cantidad de':cantidad , 'películas en el idioma':Idioma }
 
 @app.get('/peliculas_duracion')
-def peliculas_duracion( Pelicula: str ):
+def peliculas_duracion(Pelicula:):
     DF = pd.read_csv("movies_dataset_modificado_final_1.csv")
     DF_title = DF.set_index("title")
     
@@ -27,7 +27,7 @@ def peliculas_duracion( Pelicula: str ):
 
 @app.get('/franquicia')
 
-def franquicia(Franquicia: str):
+def franquicia(Franquicia):
     ## Abro el archivo y aplico groupby para tener los df de donde tomare la info que me solicitan
     DF = pd.read_csv("movies_dataset_modificado_final_1.csv")
     DF_SUM = DF.groupby(["belongs_to_collection"]).sum()
@@ -53,7 +53,7 @@ def franquicia(Franquicia: str):
 
 @app.get('/peliculas_pais')
 
-def peliculas_pais( Pais: str ):
+def peliculas_pais(Pais:):
     ## Abro el archivo y genero una lista con los valores de los paises
     DF = pd.read_csv("movies_dataset_modificado_final_1.csv")
     list_countries = list(DF.production_countries.values)
@@ -65,7 +65,7 @@ def peliculas_pais( Pais: str ):
 
 @app.get('/productoras_exitosas')
 
-def productoras_exitosas(Productora: str):
+def productoras_exitosas(Productora):
     DF = pd.read_csv("movies_dataset_modificado_final_1.csv")
     list_companies = list(DF.production_companies.values)
     
