@@ -8,7 +8,7 @@ from fastapi import FastAPI
 app = FastAPI()
 
 @app.get('/peliculas_idioma')
-def peliculas_idioma( Idioma ):
+def peliculas_idioma(Idioma):
     ## Abro el archivo y creo una lista con los valores de los idiomas
     DF = pd.read_csv("movies_dataset_modificado_final_1.csv")
     list_lang = list(DF.spoken_languages.values)
@@ -17,7 +17,7 @@ def peliculas_idioma( Idioma ):
     return {'Se produjeron la cantidad de':cantidad , 'películas en el idioma':Idioma }
 
 @app.get('/peliculas_duracion')
-def peliculas_duracion(Pelicula:):
+def peliculas_duracion(Pelicula):
     DF = pd.read_csv("movies_dataset_modificado_final_1.csv")
     DF_title = DF.set_index("title")
     
@@ -53,7 +53,7 @@ def franquicia(Franquicia):
 
 @app.get('/peliculas_pais')
 
-def peliculas_pais(Pais:):
+def peliculas_pais(Pais):
     ## Abro el archivo y genero una lista con los valores de los paises
     DF = pd.read_csv("movies_dataset_modificado_final_1.csv")
     list_countries = list(DF.production_countries.values)
